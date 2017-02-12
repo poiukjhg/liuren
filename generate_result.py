@@ -1,0 +1,69 @@
+# -*- coding: utf-8 -*- 
+import fiveelements
+import earthbranch
+import skytrunk
+import skygeneral
+import trishift
+import output_results
+class generate_result():
+	def __init__(self, today_st, today_eb, month_general, foretell_hour):
+		self.skyplate =   ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥']
+		self.skygeneral = ['贵','蛇','雀','合','勾','龙','空','虎','常','玄','阴','后']
+		self.eb_instance = earthbranch.earthbranch()
+		self.st_instance = skytrunk.skytrunk()
+		self.fe_instance = fiveelements.fiveelements()
+		self.sg_instance = skygeneral.skygeneral()
+		self.trishift = None
+		self.st = today_st
+		self.eb = today_eb
+		self.foretell_hour = foretell_hour
+		self.month_general = month_general
+		self.upper_four =  ['',       '', '',       '']
+		self.bottom_four = [today_st, '', today_eb, '']
+	def generate_skyplate(self):
+		eloopindex = self.eb_instance.names.index(self.month_general)
+		fortellindex = self.eb_instance.names.index(self.foretell_hour)
+		for index in range(12):	
+			self.skyplate[(fortellindex+index)%12] = self.eb_instance.names[(index+eloopindex)%12]
+	def generate_four(self):
+		st2eb = self.st_instance.stoeb[self.st_instance.names.index(self.st)]
+		#print '天干转地支 '+ st2eb
+		tmpstr = self.skyplate[self.eb_instance.names.index(st2eb)]
+		#print '天干上 '+tmpstr
+		self.upper_four[0] = tmpstr
+		self.bottom_four[1] = tmpstr
+		self.upper_four[1] = self.skyplate[self.eb_instance.names.index(tmpstr)]
+		#print '天干阴神'+self.upper_four[1]
+		tmpstr = self.skyplate[self.eb_instance.names.index(self.eb)]
+		#print '地支上神'+tmpstr
+		self.upper_four[2] = tmpstr
+		self.bottom_four[3] = tmpstr
+		self.upper_four[3] = self.skyplate[self.eb_instance.names.index(tmpstr)]
+		#print '地支阴神'+self.upper_four[3]
+	def generate_skygeneral(self):
+		self.skygeneral = self.sg_instance.get_skygeneral_list(self.st, self.skyplate, self.foretell_hour)
+	def generate_trishift(self):
+		self.trishift = trishift.trishift(self.upper_four, self.bottom_four)
+		self.trishift.build_trishift()
+
+if __name__ == '__main__':
+	gs = generate_result('己','巳','子','辰')
+	gs.generate_skyplate()
+	gs.generate_four()
+	gs.generate_skygeneral()
+	print '天盘'
+	print ' '.join(gs.skyplate)
+	print '天将'	
+	print ' '.join(gs.skygeneral)
+	print '四课'
+	print 'bottom'
+	for index in range(4):
+		print gs.bottom_four[3-index]
+	print 'upper'
+	for index in range(4):
+		print gs.upper_four[3-index]
+	output11 = output_results.output_results(gs.st, gs.eb, gs.month_general, gs.foretell_hour, gs.skyplate, gs.skygeneral, gs.bottom_four, gs.upper_four)
+	output11.output()
+	gs.generate_trishift()
+
+			
