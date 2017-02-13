@@ -26,7 +26,7 @@ class trishift:
 			if self.fe_instance.is_overcomed(self.bottom_attri[index], self.upper_attri[index]):
 				self.up_bottom_overcome[index] = 2	
 		print '  '.join(list(map(lambda x:['  ', '贼','克'][x], self.up_bottom_overcome[::-1])))
-		if self.up_bottom_overcome.count(1) == 1 or self.up_bottom_overcome.count(2) == 1:
+		if self.up_bottom_overcome.count(1) == 1 or (self.up_bottom_overcome.count(1) == 0  and self.up_bottom_overcome.count(2) == 1):
 			self.ninefunc = "贼克"
 			self.zeike()
 	def zeike(self):
