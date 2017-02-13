@@ -4,7 +4,7 @@ import earthbranch
 import skytrunk
 
 class trishift:
-	def __init__(self, upperlist, bottomlist):		
+	def __init__(self, upperlist, bottomlist, skyplate, skygeneral):		
 		self.eb_instance = earthbranch.earthbranch()
 		self.st_instance = skytrunk.skytrunk()
 		self.fe_instance = fiveelements.fiveelements()
@@ -13,6 +13,7 @@ class trishift:
 		self.up_bottom_overcome = [0]*4
 		self.bottom_attri = ['']*4
 		self.upper_attri = ['']*4
+		self.ninefunc = ''
 	def build_trishift(self):	
 		self.upper_attri = list(map(lambda x: self.eb_instance.attribute[self.eb_instance.names.index(x)], self.upperlist))	
 		self.bottom_attri[0] = self.st_instance.attribute[self.st_instance.names.index(self.bottomlist[0])]
@@ -25,6 +26,11 @@ class trishift:
 			if self.fe_instance.is_overcomed(self.bottom_attri[index], self.upper_attri[index]):
 				self.up_bottom_overcome[index] = 2	
 		print '  '.join(list(map(lambda x:['  ', '贼','克'][x], self.up_bottom_overcome[::-1])))
+		if self.up_bottom_overcome.count(1) == 1 or self.up_bottom_overcome.count(2) == 1:
+			self.ninefunc = "贼克"
+			self.zeike()
+	def zeike(self):
+		pass
 		
 
 

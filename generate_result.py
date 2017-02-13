@@ -43,7 +43,7 @@ class generate_result():
 	def generate_skygeneral(self):
 		self.skygeneral = self.sg_instance.get_skygeneral_list(self.st, self.skyplate, self.foretell_hour)
 	def generate_trishift(self):
-		self.trishift = trishift.trishift(self.upper_four, self.bottom_four)
+		self.trishift = trishift.trishift(self.upper_four, self.bottom_four, self.skyplate, self.skygeneral)
 		self.trishift.build_trishift()
 
 if __name__ == '__main__':
