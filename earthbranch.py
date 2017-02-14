@@ -8,6 +8,8 @@ class earthbranch:
 		self.xing =        ['卯','戌','巳','子','辰','申','午','丑','寅','酉','未','亥']
 		self.hai =         ['未','午','巳','辰','卯','寅','丑','子','亥','戌','酉','申']
 		self.yinyang =     ['阳','阴','阳','阴','阳','阴','阳','阴','阳','阴','阳','阴']	
+		self.tricoop =     [['申','','辰'],['巳','酉',''],['','午','戌'],['亥','','未'],['申','子',''],['','酉','丑'], \
+							['寅','','戌'],['亥','卯',''],['','子','辰'],['巳','','丑'],['寅','午',''],['','卯','未']]
 	def get_earthbranch_names(self):
 		return self.names	
 	def get_attribute(self, element):
@@ -25,3 +27,6 @@ class earthbranch:
 	def get_hai(self, element):
 		eindex = self.names.index(element)
 		return self.hai[eindex]
+	def get_tricoop(self, element):
+		eindex = self.names.index(element)
+		return self.tricoop[eindex]
