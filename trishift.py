@@ -21,8 +21,8 @@ class trishift:
 		self.upper_attri = list(map(lambda x: self.eb_instance.attribute[self.eb_instance.names.index(x)], self.upperlist))	
 		self.bottom_attri[0] = self.st_instance.attribute[self.st_instance.names.index(self.bottomlist[0])]
 		self.bottom_attri[1:] = list(map(lambda x: self.eb_instance.attribute[self.eb_instance.names.index(x)], self.bottomlist[1:]))		
-		print '  '.join(self.upper_attri[::-1])
-		print '  '.join(self.bottom_attri[::-1])
+		#print '  '.join(self.upper_attri[::-1])
+		#print '  '.join(self.bottom_attri[::-1])
 		full_four = (len(self.upperlist)==len(set(self.upperlist)))
 		if full_four == False:
 			#别责
@@ -73,7 +73,27 @@ class trishift:
 				self.haske(same_attr.index(1))	
 			else:
 			#涉害	
+			#直接使用孟仲季的取法
 				self.ninefunc = "涉害"	
+				sehai = ['']*4
+				tmpindex = -1
+				for index in range(4):
+					if self.up_bottom_overcome[index]  == 1:
+						tmpstr = self.upperlist[index]
+						ltmpindex = self.eb_instance.names.index(tmpstr)												
+						ltmpindex = self.eb_instance.tricoop[ltmpindex].index(tmpstr)
+						sehai[index] = ['孟', '仲', '季'][ltmpindex]
+						print tmpstr+' 涉害 '+sehai[index]
+				if sehai.count('孟') == 1:
+					tmpindex = sehai.index('孟')
+				elif sehai.count('仲') == 1:
+					tmpindex = sehai.index('仲')
+				elif sehai.count('季') == 1:
+					tmpindex = sehai.index('季')										
+				if 	tmpindex == -1:
+					print '涉害 error'
+					return None
+				self.haske(tmpindex)		
 			return self.tri
 		#元首
 		if self.up_bottom_overcome.count(2) == 1:
@@ -93,7 +113,27 @@ class trishift:
 				self.haske(same_attr.index(1))	
 			else:
 			#涉害	
-				self.ninefunc = "涉害"										
+			#直接使用孟仲季的取法
+				self.ninefunc = "涉害"
+				sehai = ['']*4
+				tmpindex = -1
+				for index in range(4):
+					if self.up_bottom_overcome[index]  == 2:
+						tmpstr = self.upperlist[index]
+						ltmpindex = self.eb_instance.names.index(tmpstr)												
+						ltmpindex = self.eb_instance.tricoop[ltmpindex].index(tmpstr)
+						sehai[index] = ['孟', '仲', '季'][ltmpindex]
+						print tmpstr+' 涉害 '+sehai[index]
+				if sehai.count('孟') == 1:
+					tmpindex = sehai.index('孟')
+				elif sehai.count('仲') == 1:
+					tmpindex = sehai.index('仲')
+				elif sehai.count('季') == 1:
+					tmpindex = sehai.index('季')										
+				if 	tmpindex == -1:
+					print '涉害 error'
+					return None
+				self.haske(tmpindex)										
 			return self.tri
 		#遥克
 		for index in range(4):

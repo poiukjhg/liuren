@@ -51,7 +51,7 @@ class generate_result():
 		self.trigeneral[2] = self.skygeneral[self.skyplate.index(trilist[2])]
 
 if __name__ == '__main__':
-	gs = generate_result('己','巳','子','辰')
+	gs = generate_result('癸','酉','子','巳')
 	gs.generate_skyplate()
 	gs.generate_four()
 	gs.generate_skygeneral()
