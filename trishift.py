@@ -70,11 +70,14 @@ class trishift:
 				tmpindex = -1
 				for index in range(4):
 					if self.up_bottom_overcome[index]  == 1:
-						tmpstr = self.upperlist[index]
+						if index == 0:
+							tmpstr = today_stoeb
+						else:
+							tmpstr = self.bottomlist[index]						
 						ltmpindex = self.eb_instance.names.index(tmpstr)												
 						ltmpindex = self.eb_instance.tricoop[ltmpindex].index(tmpstr)
 						sehai[index] = ['孟', '仲', '季'][ltmpindex]
-						print tmpstr+' 涉害 '+sehai[index]
+						print self.bottomlist[index]+' 涉害 '+sehai[index]
 				if sehai.count('孟') >= 1:
 					tmpindex = sehai.index('孟')
 				elif sehai.count('仲') >= 1:
@@ -112,11 +115,14 @@ class trishift:
 				tmpindex = -1
 				for index in range(4):
 					if self.up_bottom_overcome[index]  == 2:
-						tmpstr = self.upperlist[index]
+						if index == 0:
+							tmpstr = today_stoeb
+						else:
+							tmpstr = self.bottomlist[index]	
 						ltmpindex = self.eb_instance.names.index(tmpstr)												
 						ltmpindex = self.eb_instance.tricoop[ltmpindex].index(tmpstr)
 						sehai[index] = ['孟', '仲', '季'][ltmpindex]
-						print tmpstr+' 涉害 '+sehai[index]
+						print self.upperlist[index]+' 涉害 '+sehai[index]
 				if sehai.count('孟') >= 1:
 					tmpindex = sehai.index('孟')
 				elif sehai.count('仲') >= 1:
