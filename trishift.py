@@ -37,7 +37,7 @@ class trishift:
 				self.bazhuan()
 				return self.tri							
 			#伏吟
-			if self.upperlist[0] == self.eb_instance.names.index(today_stoeb):
+			if self.upperlist[0] == self.eb_instance.names.index(today_stoeb): 
 				self.ninefunc = "伏吟"
 				self.fuyin()
 				return self.tri			
@@ -61,11 +61,13 @@ class trishift:
 			self.haske(self.up_bottom_overcome.index(1))
 			return self.tri	
 		if 	self.up_bottom_overcome.count(1) > 1:
-			stattr = self.bottom_attri[0]
+			stattr = self.st_instance.yinyang[self.st_instance.names.index(self.bottomlist[0])]
 			same_attr = [0]*4
 			for index in range(4):
-				if self.up_bottom_overcome[index] == 1:
-					if self.upper_attri[index] == stattr:
+				if self.up_bottom_overcome[index] == 1:					
+					tmpyinyang = self.eb_instance.yinyang[self.eb_instance.names.index(self.upperlist[index])]
+					print stattr +tmpyinyang
+					if tmpyinyang == stattr:
 						same_attr[index] = 1
 			#比用			
 			if same_attr.count(1) == 1:
@@ -101,11 +103,13 @@ class trishift:
 			self.haske(self.up_bottom_overcome.index(2))
 			return self.tri			
 		if self.up_bottom_overcome.count(2) >1:
-			stattr = self.bottom_attri[0]
+			stattr = self.st_instance.yinyang[self.st_instance.names.index(self.bottomlist[0])]
 			same_attr = [0]*4
 			for index in range(4):
 				if self.up_bottom_overcome[index] == 2:
-					if self.upper_attri[index] == stattr:
+					tmpyinyang = self.eb_instance.yinyang[self.eb_instance.names.index(self.upperlist[index])]
+					print stattr +tmpyinyang
+					if tmpyinyang == stattr:
 						same_attr[index] = 1
 			#比用			
 			if same_attr.count(1) == 1:
