@@ -82,7 +82,7 @@ if __name__ == '__main__':
 '''
 
 	for item in ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥']:		
-		print "新一课占时"+item+"\n\r"
+		#print "新一课占时"+item+"\n\r"
 		gs = generate_result('癸','酉','子',item)
 		gs.generate_skyplate()
 		gs.generate_four()

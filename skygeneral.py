@@ -23,16 +23,16 @@ class skygeneral:
 		skygeneral_list = ['贵',  '蛇',   '雀', '合',  '勾',   '龙',  '空',  '虎',  '常',  '玄',  '阴',  '后']		
 		etb = earthbranch.earthbranch()
 		god_loc = self.get_god_loc(today_st, foretell_hour)
-		print "贵人在"+god_loc
+		#print "贵人在"+god_loc
 		sky_shift = skyplate.index('子')
 		god_etb_index = (etb.names.index(god_loc)+sky_shift)%12
-		print "贵人在地盘"+etb.names[god_etb_index]	
+		#print "贵人在地盘"+etb.names[god_etb_index]	
 		if god_etb_index>4 and god_etb_index<11:
-			print "逆序"
+			#print "逆序"
 			for index in range(12):	
 				skygeneral_list[(index+god_etb_index)%12] = self.names[(12-index)%12] 
 		else:	
-			print "顺序"	
+			#print "顺序"	
 			for index in range(12):	
 				skygeneral_list[(index+god_etb_index)%12] = self.names[index] 					
 		return skygeneral_list	

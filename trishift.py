@@ -33,9 +33,9 @@ class trishift:
 			if self.fe_instance.is_overcomed(self.bottom_attri[index], self.upper_attri[index]):
 				self.up_bottom_overcome[index] = 2	
 			
-		print '  '.join(list(map(lambda x:['  ', '贼','克'][x], self.up_bottom_overcome[::-1])))
+		#print '  '.join(list(map(lambda x:['  ', '贼','克'][x], self.up_bottom_overcome[::-1])))
 		today_stoeb = self.st_instance.stoeb[self.st_instance.names.index(self.bottomlist[0])]	
-		print '日干寄宫'+today_stoeb		
+		#print '日干寄宫'+today_stoeb		
 		full_four = (len(self.upperlist)==len(set(self.upperlist)))		
 		if full_four == False:
 			#print '不备'						
@@ -77,7 +77,7 @@ class trishift:
 						ltmpindex = self.eb_instance.names.index(tmpstr)												
 						ltmpindex = self.eb_instance.tricoop[ltmpindex].index(tmpstr)
 						sehai[index] = ['孟', '仲', '季'][ltmpindex]
-						print self.bottomlist[index]+' 涉害 '+sehai[index]
+						#print self.bottomlist[index]+' 涉害 '+sehai[index]
 				if sehai.count('孟') >= 1:
 					tmpindex = sehai.index('孟')
 				elif sehai.count('仲') >= 1:
@@ -100,7 +100,7 @@ class trishift:
 			for index in range(4):
 				if self.up_bottom_overcome[index] == 2:
 					tmpyinyang = self.eb_instance.yinyang[self.eb_instance.names.index(self.upperlist[index])]
-					print stattr +tmpyinyang
+					#print stattr +tmpyinyang
 					if tmpyinyang == stattr:
 						same_attr[index] = 1
 			#比用			
@@ -122,7 +122,7 @@ class trishift:
 						ltmpindex = self.eb_instance.names.index(tmpstr)												
 						ltmpindex = self.eb_instance.tricoop[ltmpindex].index(tmpstr)
 						sehai[index] = ['孟', '仲', '季'][ltmpindex]
-						print self.upperlist[index]+' 涉害 '+sehai[index]
+						#print self.upperlist[index]+' 涉害 '+sehai[index]
 				if sehai.count('孟') >= 1:
 					tmpindex = sehai.index('孟')
 				elif sehai.count('仲') >= 1:
@@ -142,7 +142,7 @@ class trishift:
 			#蒿	
 			if self.fe_instance.is_overcomed(self.bottom_attri[0], self.upper_attri[index]):
 				self.up_bottom_overcome_yao[index] = 4
-		print '  '.join(list(map(lambda x:['  ', '贼','克', '弹', '矢'][x], self.up_bottom_overcome_yao[::-1])))
+		#print '  '.join(list(map(lambda x:['  ', '贼','克', '弹', '矢'][x], self.up_bottom_overcome_yao[::-1])))
 		#蒿矢	
 		if self.up_bottom_overcome_yao.count(4) == 1:	
 			self.ninefunc = "遥克"
@@ -196,15 +196,41 @@ class trishift:
 			self.angxing()
 		return self.tri
 	def out_res(self):
-		print self.ninefunc
+		#print self.ninefunc
 		#print ' '.join(self.tri)
 		#map(lambda x: self.skyplate_st[self.skyplate.index(x)]+x , self.tri)
 		#tmpl = list(map(lambda x: self.skyplate_st[self.skyplate.index(x)]+x+"  "+ self.skygeneral[self.skyplate.index(x)], self.tri))
 		tmpl = list(map(lambda x: self.skyplate_st[self.skyplate.index(x)]+x+"  "+ self.skygeneral[self.skyplate.index(x)], self.tri))
-		print tmpl[0]
-		print tmpl[1]
-		print tmpl[2]
-		
+		relation = ['']*3
+		for index  in range(3):
+			tmpattri = self.eb_instance.attribute[self.eb_instance.names.index(self.tri[index])]		
+			if self.fe_instance.is_overcoming(self.bottom_attri[0], tmpattri) == True:
+				relation[index] = '财'
+			elif self.fe_instance.is_overcomed(self.bottom_attri[0], tmpattri) == True:
+				relation[index] = '官'				
+			elif self.fe_instance.is_child(self.bottom_attri[0], tmpattri) == True:
+				relation[index] = '子'				
+			elif self.fe_instance.is_parent(self.bottom_attri[0], tmpattri) == True:
+				relation[index] = '父'				
+			else:
+				relation[index] = '比'
+
+		print "\n\r三传"
+		print relation[0]+"  "+tmpl[0]
+		print relation[1]+"  "+tmpl[1]
+		print relation[2]+"  "+tmpl[2]
+		print "\n\r详解"
+		file_name = "./output/"+self.bottomlist[0]+self.bottomlist[2]+"日干上"+self.upperlist[0]+".ini"
+		#print file_name
+		try:
+			f = open(file_name, "r")	
+		except IOError:
+			print "Error: open  %s file error!" % file_name
+		else:  
+			tmpline = f.read()
+			print tmpline
+			f.close()
+				
 	def haske(self, index):		
 		self.tri[0] = self.upperlist[index]
 		self.tri[1] = self.skyplate[self.eb_instance.names.index(self.tri[0])]

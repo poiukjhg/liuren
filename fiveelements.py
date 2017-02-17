@@ -30,7 +30,16 @@ class fiveelements:
 		if element2 == tmpstr:
 			return True
 		return False	
-
+	def is_child(self, element1, element2):
+		tmpstr = self.get_child(element1)
+		if element2 == tmpstr:
+			return True
+		return False
+	def is_parent(self, element1, element2):
+		tmpstr = self.get_parent(element1)
+		if element2 == tmpstr:
+			return True
+		return False
 
 
 if __name__ == '__main__':
