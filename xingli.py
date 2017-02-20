@@ -1010,7 +1010,7 @@ class SolarTerm():
             q = q + J2000 + 8 / 24; # 计算第i个节气(i=0是春分),结果转为北京时  
             self.setFromJD(q, True);  
             s1 = self.toStr(); # 将儒略日转成世界时  
-            output.append(''.join(s1))
+            output.append((''.join(s1)).lstrip())
             #self.setFromJD(q, False);  
             #s2 = self.toStr(); # 将儒略日转成日期格式(输出日期形式的力学时)  
             #print(jqB[i] + " : " + s1 + " " + s2); # 显示 
@@ -1019,7 +1019,7 @@ class SolarTerm():
             q = q + J2000 + 8 / 24; # 计算第i个节气(i=0是春分),结果转为北京时  
             self.setFromJD(q, True);  
             s1 = self.toStr(); # 将儒略日转成世界时  
-            output.append(''.join(s1)) 
+            output.append((''.join(s1)).lstrip()) 
         return output              
 
 if __name__ == "__main__":
