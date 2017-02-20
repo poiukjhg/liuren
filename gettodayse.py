@@ -13,15 +13,14 @@ class todayse:
 		self.month = nowtime[4:5]
 		self.day = nowtime[6:7]
 		self.hour = nowtime[8:]
-		print self.year
 		self.jieqi = xingli().mytest(int(self.year))
 		cday = curtime
 		print self.jieqi[0]
-		year_start = datetime.strptime(self.jieqi[0], '%Y-%m-%d %H:%M:%S') 		
+		year_start = datetime.strptime(self.jieqi[0], ' %Y-%m-%d %H:%M:%S') 		
 		if cday < year_start:
 			self.year = self.year-1		
 			self.jieqi = xingli().mytest(int(self.year)	)
-		print ' '.join(self.jieqi)	
+		#print ' '.join(self.jieqi)	
 
 	def get_year(self):
 		self.ystmpindex = int(self.year[-1])
