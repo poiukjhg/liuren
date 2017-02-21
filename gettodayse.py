@@ -8,7 +8,7 @@ class todayse:
 	def __init__(self, curtime = datetime.now(), localzone = 8):
 		self.eb_instance = earthbranch.earthbranch()
 		self.st_instance = skytrunk.skytrunk()	
-		print curtime
+		#print curtime
 		tmphour = curtime.strftime('%H')
 		self._replace_time = curtime
 		self.real_time = curtime
@@ -19,6 +19,8 @@ class todayse:
 		self.month = self.nowtime[5:6]
 		self.day = self.nowtime[8:9]
 		self.hour = self.nowtime[11:]
+		self.is_set_hour = False
+		self.fortell_hour_index = 0
 		xinlitmp = xingli()
 		self.jieqi = xinlitmp.mytest(int(self.year))
 		cday = curtime
@@ -71,7 +73,9 @@ class todayse:
 		'''
 		g = 4C + [C/4] + 5y + [y/4] + [3*(M+1) / 5] + d - 3
 		z = 8C + [C/4] + 5y + [y/4] + [3*(M+1) / 5] + d + 7 + i (奇数月i=0，偶数月i=6)
-		其中C是世纪数减一，y是年份后两位，M是月份，d是日数。1月和2月按上一年的13月和
+		z = g+4C+10+i
+		其中C是世纪数减一，y是年份后两位，M是月份，d是日数。1月和2月按上一年的13月
+		因此C和y也要按上一年的年份搜索来取值
 		14月来算。g除以10的余数是天干，z除以12的余数是地支。
 		'''
 		i = 0
@@ -80,44 +84,63 @@ class todayse:
 		M = int(temptime[5:7])
 		d = int(temptime[8:10])
 		if M ==1 or M ==2:
-			#year = str(int(year)-1)
+			year = str(int(year)-1)
 			M=M+12
-		C = int(year[0:2])-1
+		C = int(year[0:2])
 		y = int(year[2:])
 		if int(M)%2 ==0:
 			i=6
-		print str(C)+" "+str(y)+" "+str(M)+" "+str(d)+ " "+str(i)
-		g = 4*C + math.ceil(C/4) + 5*y + math.ceil(y/4) + math.ceil(3*(M+1) / 5) + d - 3
-		print str(math.ceil(C/4))
-		print str(math.ceil(y/4))
-		print str(g)
+		#print str(C)+" "+str(y)+" "+str(M)+" "+str(d)+ " "+str(i)
+		g = 4*C + math.floor(float(C)/4) + 5*y + math.floor(float(y)/4) + math.floor(3*(float(M)+1) / 5) + d - 3
+		'''
+		print str(4*C)
+		print str(math.floor(float(C)/4))
+		print str(5*y )
+		print str(math.floor(float(y)/4))
+		print str(math.floor(3*(float(M)+1) / 5))
+		print str(d)
+		'''
+		#print str(g)
 		stindex = int(g)%10-1
-		z = 8*C + math.ceil(C/4) + 5*y + math.ceil(y/4) + math.ceil(3*(M+1) / 5) + d + 7 + i 
-		print str(z)
+		z = g+4*C+10+i
+		#print str(z)
 		ebindex = int(z)%12-1
+		self.debtmpindex = ebindex
+		self.dsttmpindex = stindex
 		return self.st_instance.names[stindex]+self.eb_instance.names[ebindex]	
 	def get_fortell_hour(self):
-		tmpindex = (int(self.hour.lstrip()[0:2])+1)/2
-		return self.eb_instance.names[tmpindex]
+		if self.is_set_hour == False:
+			tmpindex = (int(self.hour.lstrip()[0:2])+1)/2
+			self.fortell_hour_index = tmpindex
+		return self.eb_instance.names[self.fortell_hour_index ]
+	def get_hour(self):
+		heb = self.get_fortell_hour()
+		tmpstart = (self.dsttmpindex%5)*2
+		#print str(tmpstart)
+		self.hsttmpindex = (self.fortell_hour_index+tmpstart)%10
+		return self.st_instance.names[self.hsttmpindex]+heb
+	def set_fortell_hour(self, index):
+		self.fortell_hour_index = index
+		self.is_set_hour = True
+	
+
 
 if __name__ == "__main__":
-	'''
+	
 	test = todayse()	
 	print  test.real_time
-	print "年"+test.get_year()+" 月"+test.get_month()+" 日"+test.get_day() + " 月将"+test.get_month_general()+ " 占时"+test.get_fortell_hour()	
-	
+	print "年"+test.get_year()+" 月"+test.get_month()+" 日"+test.get_day() + " 月将"+test.get_month_general()+ " 占时"+test.get_hour()
+	print '2009-07-16 12:59:59'
+	test = todayse(datetime.strptime('2009-07-16 12:59:59', '%Y-%m-%d %H:%M:%S'))
+	print "年"+test.get_year()+" 月"+test.get_month()+" 日"+test.get_day() + " 月将"+test.get_month_general()+ " 占时"+test.get_hour()
 	print '2016-11-06 23:19:59' 
 	test = todayse(datetime.strptime('2016-11-06 23:19:59', '%Y-%m-%d %H:%M:%S'))
-	print "年"+test.get_year()+" 月"+test.get_month() +" 日"+test.get_day()+ " 月将"+test.get_month_general()+ " 占时"+test.get_fortell_hour()
+	print "年"+test.get_year()+" 月"+test.get_month() +" 日"+test.get_day()+ " 月将"+test.get_month_general()+ " 占时"+test.get_hour()
 
 	print '2016-11-06 23:59:59'
 	test = todayse(datetime.strptime('2016-11-06 23:59:59', '%Y-%m-%d %H:%M:%S'))
-	print "年"+test.get_year()+" 月"+test.get_month()+" 日"+test.get_day() + " 月将"+test.get_month_general()+ " 占时"+test.get_fortell_hour()
-'''
-	print '2009-07-16 12:59:59'
-	test = todayse(datetime.strptime('2009-07-16 12:59:59', '%Y-%m-%d %H:%M:%S'))
-	print "年"+test.get_year()+" 月"+test.get_month()+" 日"+test.get_day() + " 月将"+test.get_month_general()+ " 占时"+test.get_fortell_hour()
-	
+	test.set_fortell_hour(4)
+	print "年"+test.get_year()+" 月"+test.get_month()+" 日"+test.get_day() + " 月将"+test.get_month_general()+ " 占时"+test.get_hour()
 
     
 

@@ -7,6 +7,12 @@ import trishift
 import output_results
 class generate_result():
 	def __init__(self, today_st, today_eb, month_general, foretell_hour):
+		'''
+		print today_st
+		print today_eb
+		print month_general
+		print foretell_hour
+		'''
 		self.skyplate =   ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥']
 		self.skyplate_st = ['']*12
 		self.skygeneral = ['贵','蛇','雀','合','勾','龙','空','虎','常','玄','阴','后']
@@ -22,6 +28,7 @@ class generate_result():
 		self.upper_four =  ['',       '', '',       '']
 		self.bottom_four = [today_st, '', today_eb, '']
 		self.trigeneral = ['']*3
+		self.triline = ''
 	def generate_skyplate(self):
 		eloopindex = self.eb_instance.names.index(self.month_general)
 		fortellindex = self.eb_instance.names.index(self.foretell_hour)
@@ -54,11 +61,13 @@ class generate_result():
 		self.skygeneral = self.sg_instance.get_skygeneral_list(self.st, self.skyplate, self.foretell_hour)
 	def generate_trishift(self):
 		self.trishift = trishift.trishift(self.upper_four, self.bottom_four, self.skyplate, self.skygeneral, self.skyplate_st)
+		'''
 		trilist = self.trishift.build_trishift()
 		self.trigeneral[0] = self.skygeneral[self.skyplate.index(trilist[0])]
 		self.trigeneral[1] = self.skygeneral[self.skyplate.index(trilist[1])]
 		self.trigeneral[2] = self.skygeneral[self.skyplate.index(trilist[2])]
-
+		'''
+		self.triline = self.trishift.build_trishift()
 if __name__ == '__main__':
 	'''
 	gs = generate_result('癸','酉','子','辰')
@@ -87,7 +96,8 @@ if __name__ == '__main__':
 		gs.generate_skyplate()
 		gs.generate_four()
 		gs.generate_skygeneral()
-		output11 = output_results.output_results(gs.st, gs.eb, gs.month_general, gs.foretell_hour, gs.skyplate, gs.skygeneral, gs.bottom_four, gs.upper_four)
+		gs.generate_trishift()	
+		output11 = output_results.output_results(gs.st, gs.eb, gs.month_general, gs.foretell_hour, gs.skyplate, gs.skygeneral, gs.bottom_four, gs.upper_four, gs.triline)
 		output11.output()
-		gs.generate_trishift()			
+				
 

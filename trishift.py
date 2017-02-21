@@ -19,6 +19,7 @@ class trishift:
 		self.upper_attri = ['']*4
 		self.ninefunc = ''
 		self.tri = ['']*3
+		self.out_lines = ''
 	def build_trishift(self):	
 		self.upper_attri = list(map(lambda x: self.eb_instance.attribute[self.eb_instance.names.index(x)], self.upperlist))	
 		self.bottom_attri[0] = self.st_instance.attribute[self.st_instance.names.index(self.bottomlist[0])]
@@ -43,12 +44,12 @@ class trishift:
 			if self.upperlist[0] == today_stoeb: 
 				self.ninefunc = "伏吟"
 				self.fuyin()
-				return self.tri					
+				return self.out_lines					
 		#重审
 		if self.up_bottom_overcome.count(1) == 1 :
 			self.ninefunc = "重审"
 			self.haske(self.up_bottom_overcome.index(1))
-			return self.tri	
+			return self.out_lines	
 		if 	self.up_bottom_overcome.count(1) > 1:
 			stattr = self.st_instance.yinyang[self.st_instance.names.index(self.bottomlist[0])]
 			same_attr = [0]*4
@@ -88,12 +89,12 @@ class trishift:
 					print '涉害 error'
 					return None
 				self.haske(tmpindex)		
-			return self.tri
+			return self.out_lines
 		#元首
 		if self.up_bottom_overcome.count(2) == 1:
 			self.ninefunc = "元首"
 			self.haske(self.up_bottom_overcome.index(2))
-			return self.tri			
+			return self.out_lines			
 		if self.up_bottom_overcome.count(2) >1:
 			stattr = self.st_instance.yinyang[self.st_instance.names.index(self.bottomlist[0])]
 			same_attr = [0]*4
@@ -133,7 +134,7 @@ class trishift:
 					print '涉害 error'
 					return None
 				self.haske(tmpindex)										
-			return self.tri
+			return self.out_lines
 		#遥克
 		for index in range(4):
 			#弹
@@ -147,7 +148,7 @@ class trishift:
 		if self.up_bottom_overcome_yao.count(4) == 1:	
 			self.ninefunc = "遥克"
 			self.haske(self.up_bottom_overcome_yao.index(4))
-			return self.tri	
+			return self.out_lines	
 		if self.up_bottom_overcome_yao.count(4)>1:
 			self.ninefunc = "遥克"
 			stattr = self.bottom_attri[0]
@@ -158,12 +159,12 @@ class trishift:
 						same_attr[index] = 1		
 			if same_attr.count(1) == 1:	
 				self.haske(same_attr.index(1))				
-			return self.tri	
+			return self.out_lines	
 		#弹射
 		if self.up_bottom_overcome_yao.count(3)==1:
 			self.ninefunc = "遥克"
 			self.haske(self.up_bottom_overcome_yao.index(3))
-			return self.tri	
+			return self.out_lines	
 		if self.up_bottom_overcome_yao.count(3)>1:
 			self.ninefunc = "遥克"
 			stattr = self.bottom_attri[0]
@@ -174,27 +175,27 @@ class trishift:
 						same_attr[index] = 1		
 			if same_attr.count(1) == 1:	
 				self.haske(same_attr.index(1))			
-			return self.tri	
+			return self.out_lines	
 		if full_four == False:
 			#别责
 			if len(set(self.upperlist)) == 3:
 				self.ninefunc = "别责"
 				self.bieze()
-				return self.tri
+				return self.out_lines
 			#八专						
 			if self.bottomlist[2] == today_stoeb:
 				self.ninefunc = "八专"
 				self.bazhuan()
-				return self.tri	
+				return self.out_lines	
 			#反吟
 			if self.upperlist[0] == self.eb_instance.opposited[self.eb_instance.names.index(today_stoeb)]:
 				self.ninefunc = "反吟"
 				self.fanyin()
-				return self.tri	
+				return self.out_lines	
 		#昴星
 		else:			
 			self.angxing()
-		return self.tri
+		return self.out_lines
 	def out_res(self):
 		#print self.ninefunc
 		#print ' '.join(self.tri)
@@ -215,11 +216,11 @@ class trishift:
 			else:
 				relation[index] = '比'
 
-		print "\n\r三传"
-		print relation[0]+"  "+tmpl[0]
-		print relation[1]+"  "+tmpl[1]
-		print relation[2]+"  "+tmpl[2]
-		print "\n\r详解"
+		tmpline = "\n\r三传"
+		tmpline = tmpline + "\n\r"+relation[0]+"  "+tmpl[0]
+		tmpline = tmpline + "\n\r"+relation[1]+"  "+tmpl[1]
+		tmpline = tmpline + "\n\r"+relation[2]+"  "+tmpl[2]
+		tmpline = tmpline + "\n\r详解\n\r"
 		file_name = "./output/"+self.bottomlist[0]+self.bottomlist[2]+"日干上"+self.upperlist[0]+".ini"
 		#print file_name
 		try:
@@ -227,9 +228,11 @@ class trishift:
 		except IOError:
 			print "Error: open  %s file error!" % file_name
 		else:  
-			tmpline = f.read()
-			print tmpline
-			f.close()
+			tmpline = tmpline+f.read()
+		finally:
+			if f :	
+				f.close()
+		self.out_lines = tmpline
 				
 	def haske(self, index):		
 		self.tri[0] = self.upperlist[index]

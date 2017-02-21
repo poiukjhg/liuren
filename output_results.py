@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 class output_results():
-	def __init__(self, skytrunk, earthbranch, monthgeneral, fortell_hour, skyplate, skygeneral, fourclass_buttom, fourclass_upper):
+	def __init__(self, skytrunk, earthbranch, monthgeneral, fortell_hour, skyplate, skygeneral, fourclass_buttom, fourclass_upper, triline):
 		self.skytrunk = skytrunk
 		self.earthbranch = earthbranch
 		self.fortell_hour = fortell_hour
@@ -9,7 +9,7 @@ class output_results():
 		self.skygeneral = skygeneral
 		self.fourclass_upper = fourclass_upper
 		self.fourclass_buttom = fourclass_buttom
-
+		self.triline = triline
 	#	self.trisshift = trisshift
 	def output(self):
 		print self.skytrunk+self.earthbranch+'日'+self.fortell_hour+'时'+self.monthgeneral+'将'
@@ -27,3 +27,4 @@ class output_results():
 		print tmpgeneral[0]+'  '+tmpgeneral[1]+'  '+tmpgeneral[2]+'  '+tmpgeneral[3]+'  '
 		print self.fourclass_upper[3]+'  '+self.fourclass_upper[2]+'  '+self.fourclass_upper[1]+'  '+self.fourclass_upper[0]+'  '
 		print self.fourclass_buttom[3]+'  '+self.fourclass_buttom[2]+'  '+self.fourclass_buttom[1]+'  '+self.fourclass_buttom[0]+'  '
+		print self.triline
