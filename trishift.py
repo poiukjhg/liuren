@@ -248,7 +248,7 @@ class trishift:
 			self.tri[2] = self.upperlist[0]
 		#冬蛇掩目	
 		else:	
-			self.tri[0] = self.eb_instance.names[self.upperlist.index('酉')]
+			self.tri[0] = self.eb_instance.names[self.skyplate.index('酉')]
 			self.tri[1] = self.upperlist[0]
 			self.tri[2] = self.upperlist[2]			
 		self.out_res()	
